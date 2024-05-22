@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+	<h2>Trending Products</h1>
+	<hr>
+	<div class="row">
+		{% for product in trending_products %}
+		<div class="col-lg-3">
+			<div class="box-element product">
+			<div class="badge">Trending</div>
+			<img class="thumbnail" src="{{product.imageURL}}">
+			
+				
+				<hr>
+				<!-- <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+				<a class="btn btn-outline-success" href="{% url 'product' product.id %}">View</a> -->
+				<p>{{product.name}}</p>
+				<h5 class="product-price"><strong>₱{{product.price|floatformat:2}}</strong></h5>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<h2><br>OnSale Products</h1>
+	<hr>
+	<div class="row">
+		{% for product in products %}
+			{% if product.on_sale %}
+				<div class="col-lg-4">
+					<div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+					<img class="thumbnail" src="{{product.imageURL}}">
+					<div class="box-element product">
+						<h6><strong>{{product.name}}</strong></h6>
+						<hr>
+						<button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+						<a class="btn btn-outline-success" href="{% url 'product' product.id %}">View</a>
+						<h4 style="display: inline-block; float:right"><s>₱{{product.price|floatformat:2}}</s></h4>
+						<h4 style="display: inline-block; float:right"><strong>₱{{product.sale_price|floatformat:2}}</strong></h4>
+					</div>
+				</div>
+			{% else %}
+				<div class="col-lg-4">
+					<img class="thumbnail" src="{{product.imageURL}}">
+					<div class="box-element product">
+						<h6><strong>{{product.name}}</strong></h6>
+						<hr>
+						<button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+						<a class="btn btn-outline-success" href="{% url 'product' product.id %}">View</a>
+						<h4 style="display: inline-block; float:right"><strong>₱{{product.price|floatformat:2}}</strong></h4>
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+
+	
+
+{% endblock content %}

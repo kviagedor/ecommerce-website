@@ -1,0 +1,66 @@
+{% load static %}
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">K2J</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-fw fa-home"></i> Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Product</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Categories
+                </a>
+                <div class="dropdown-menu"s>
+                <a class="dropdown-item" href="#"><i class="fa fa-search"></i>&nbsp; Search Product</a>
+                {% for category in categories %}
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">{{category}}</a>
+                {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}"><i class="fa fa-fw fa-envelope"></i>Contact</a>
+            </li>
+            </ul>
+            <form class="d-flex">
+                <ul class="navbar-nav">
+                    <div class="form-inline my-2 my-lg-0">
+                        <a href="{% url 'cart' %}">
+                        <img  id="cart-icon" src="{% static 'images/cart.png' %}">
+                    </a>
+                    <p id="cart-total">{{cartItems}}</p>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Hey, welcome <strong>{{user}}</strong>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Manage My Account</a>
+                        <a class="dropdown-item" href="#">My Wishlist</a>
+                        <a class="dropdown-item" href="#">My Reviews</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>&nbsp;Logout</a>
+                        </div>
+                    </li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i>Login</a>
+                    {% endif %}
+                </ul>
+            </form>
+        </div>
+    </div>
+</nav>

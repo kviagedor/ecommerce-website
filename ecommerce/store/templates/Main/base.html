@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>K2J Online Shop</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+	<script type="text/javascript">
+		var user = '{{request.user}}'
+
+		function getToken(name) {
+			var cookieValue = null;
+			if (document.cookie && document.cookie !== '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = cookies[i].trim();
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		var csrftoken = getToken('csrftoken');
+
+
+		function getCookie(name) {
+
+			var cookieArr = document.cookie.split(";");
+
+			for(var i = 0; i < cookieArr.length; i++) {
+				var cookiePair = cookieArr[i].split("=");
+
+				if(name == cookiePair[0].trim()) {
+					return decodeURIComponent(cookiePair[1]);
+				}
+			}
+			return null
+		}
+
+		var cart = JSON.parse(getCookie('cart'))
+		if(cart == undefined) {
+			cart = {}
+			console.log('Cart was created!')
+			document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+		}
+
+		 console.log('Cart:', cart)
+	</script>	
+
+</head>
+<body>
+
+    {% include 'main/navbar.html' %}
+
+    <div class="container">
+        <br>
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+
+	<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+	{% include 'main/footer.html' %}
+	
+</body>
+</html>
